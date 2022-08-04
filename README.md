@@ -1,2 +1,2 @@
-# jetpack-compose-throbber
-Snippet for a windows 10+ style circular throbber using Jetpack Compose.
+# jetpack-compose-snippets
+Snippet for various different ui elements to be used in the development of android applications. For example, Circular Throbbers, BottomNavigationBars, etc.
