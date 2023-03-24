@@ -1,2 +1,4 @@
 # jetpack-compose-snippets
-Snippet for various different ui elements to be used in the development of android applications. For example, Circular Throbbers, BottomNavigationBars, etc.
+The Jetpack Compose Snippets repository is a collection of snippets for Jetpack Compose Elements that are created and maintained by the developer. This repository provides a comprehensive library of reusable code snippets for various Jetpack Compose UI elements, such as progress indicators, bottom navigation bars, and more. Each element has multiple versions, allowing the developer to choose the one that best suits their specific use case.
+
+As the repository is maintained by a single developer, updates and additions are made periodically to ensure that the snippets are up to date with the latest Jetpack Compose releases. This repository serves as a valuable resource for developers who are looking to streamline their development process by using pre-existing code snippets. With the Jetpack Compose Snippets repository, developers can save time and increase productivity while building beautiful and functional user interfaces with Jetpack Compose.
