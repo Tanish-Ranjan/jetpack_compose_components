@@ -5,39 +5,45 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.tanishranjan.jetpack_compose_components.composables.throbber.CircularThrobber1
-import com.tanishranjan.jetpack_compose_components.composables.throbber.CircularThrobber2
-import com.tanishranjan.jetpack_compose_components.composables.throbber.CircularThrobber3
-import com.tanishranjan.jetpack_compose_components.composables.throbber.CircularThrobber4
+import com.tanishranjan.jetpack_compose_components.composables.throbber.CircularThrobber
+import com.tanishranjan.jetpack_compose_components.properties.throbber.CircularThrobberVariants
 
 @Composable
-internal fun CircularThrobber1Sample() {
-    CircularThrobber1(
+internal fun RippleSample() {
+    CircularThrobber(
         modifier = Modifier.size(50.dp),
-        color = Color.Red
+        variant = CircularThrobberVariants.Ripple(
+            color = Color.Red
+        )
     )
 }
 
 @Composable
-internal fun CircularThrobber2Sample() {
-    CircularThrobber2(
+internal fun WindowsSample() {
+    CircularThrobber(
         modifier = Modifier.size(50.dp),
-        color = Color.Red
+        variant = CircularThrobberVariants.Windows(
+            color = Color.Red
+        )
     )
 }
 
 @Composable
-internal fun CircularThrobber3Sample() {
-    CircularThrobber3(
+internal fun WebSample() {
+    CircularThrobber(
         modifier = Modifier.size(50.dp),
-        color = Color.Red
+        variant = CircularThrobberVariants.Web(
+            color = Color.Red
+        )
     )
 }
 
 @Composable
-internal fun CircularThrobber4Sample() {
-    CircularThrobber4(
+internal fun LegacySample() {
+    CircularThrobber(
         modifier = Modifier.size(50.dp),
-        color = Color.Red
+        variant = CircularThrobberVariants.Legacy(
+            color = Color.Red
+        )
     )
 }

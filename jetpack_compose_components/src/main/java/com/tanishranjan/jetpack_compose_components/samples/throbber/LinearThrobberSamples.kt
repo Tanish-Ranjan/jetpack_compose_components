@@ -5,21 +5,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.tanishranjan.jetpack_compose_components.composables.throbber.LinearThrobber1
-import com.tanishranjan.jetpack_compose_components.composables.throbber.LinearThrobber2
+import com.tanishranjan.jetpack_compose_components.composables.throbber.LinearThrobber
+import com.tanishranjan.jetpack_compose_components.properties.throbber.LinearThrobberVariant
 
 @Composable
-internal fun LinearThrobber1Sample() {
-    LinearThrobber1(
+internal fun BloomingDotsSample() {
+    LinearThrobber(
         modifier = Modifier.size(50.dp),
-        color = Color.Red
+        variant = LinearThrobberVariant.BloomingDots(dotColor = Color.Red)
     )
 }
 
 @Composable
-internal fun LinearThrobber2Sample() {
-    LinearThrobber2(
+internal fun BouncingDotsSample() {
+    LinearThrobber(
         modifier = Modifier.size(50.dp),
-        color = Color.Red
+        variant = LinearThrobberVariant.BouncingDots(dotColor = Color.Red)
     )
 }

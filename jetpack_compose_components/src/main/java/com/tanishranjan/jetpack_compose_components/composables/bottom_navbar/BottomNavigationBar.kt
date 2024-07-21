@@ -32,8 +32,116 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.data.NavigationItemData
+import com.tanishranjan.jetpack_compose_components.properties.bottom_navbar.BottomNavBarVariant
+import com.tanishranjan.jetpack_compose_components.utils.ComponentUtils.Companion.useIfUnspecified
+
+@Composable
+fun BottomNavigationBar(
+    variant: BottomNavBarVariant,
+    modifier: Modifier = Modifier,
+    onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
+) {
+
+    when (variant) {
+
+        is BottomNavBarVariant.Minimal -> {
+            MinimalVariant(
+                modifier = modifier,
+                navItems = variant.navItems,
+                iconSize = variant.iconSize,
+                defaultSelectedIndex = variant.defaultSelectedIndex,
+                shape = variant.shape,
+                navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
+                itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
+                selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.primary),
+                onSelectionChanged = onSelectionChanged
+            )
+        }
+
+        is BottomNavBarVariant.Standard -> {
+            StandardVariant(
+                modifier = modifier,
+                navItems = variant.navItems,
+                selectedItemCornerRadius = variant.selectedItemCornerRadius,
+                internalPadding = variant.internalPadding,
+                iconSize = variant.iconSize,
+                defaultSelectedIndex = variant.defaultSelectedIndex,
+                shape = variant.shape,
+                navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
+                itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
+                selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
+                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
+                selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
+                    MaterialTheme.colorScheme.primary
+                ),
+                onSelectionChanged = onSelectionChanged
+            )
+        }
+
+        is BottomNavBarVariant.Filled -> {
+            FilledVariant(
+                modifier = modifier,
+                navItems = variant.navItems,
+                iconSize = variant.iconSize,
+                defaultSelectedIndex = variant.defaultSelectedIndex,
+                shape = variant.shape,
+                navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
+                itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
+                selectedItemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
+                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
+                selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
+                    MaterialTheme.colorScheme.primary
+                ),
+                onSelectionChanged = onSelectionChanged
+            )
+        }
+
+        is BottomNavBarVariant.Halo -> {
+            HaloVariant(
+                modifier = modifier,
+                navItems = variant.navItems,
+                selectedItemCornerRadius = variant.selectedItemCornerRadius,
+                internalPadding = variant.internalPadding,
+                iconSize = variant.iconSize,
+                fontSize = variant.fontSize,
+                defaultSelectedIndex = variant.defaultSelectedIndex,
+                shape = variant.shape,
+                navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
+                itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
+                selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
+                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
+                selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
+                    MaterialTheme.colorScheme.primary
+                ),
+                onSelectionChanged = onSelectionChanged
+            )
+        }
+
+        is BottomNavBarVariant.Sway -> {
+            SwayVariant(
+                modifier = modifier,
+                navItems = variant.navItems,
+                internalPadding = variant.internalPadding,
+                iconSize = variant.iconSize,
+                fontSize = variant.fontSize,
+                defaultSelectedIndex = variant.defaultSelectedIndex,
+                selectedItemOffset = variant.selectedItemOffset,
+                shape = variant.shape,
+                navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
+                itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
+                selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
+                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
+                selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
+                    MaterialTheme.colorScheme.primary
+                ),
+                onSelectionChanged = onSelectionChanged
+            )
+        }
+
+    }
+
+}
 
 /**
  * A bottom navigation bar composable with icons and labels.
@@ -47,25 +155,25 @@ import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.dat
  * @param navigationBarColor The color of the bottom navigation bar background.
  * @param itemTint The tint color for the non-selected navigation bar item icons.
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
- * @param itemSelected A callback function that gets called when a navigation bar item is selected.
+ * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
  *                     indicating whether the same item was reselected.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.BottomNavigationBar1Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.MinimalSample
  */
 @Composable
-fun BottomNavigationBar1(
-    navItems: List<NavigationItemData>,
-    modifier: Modifier = Modifier,
-    iconSize: Dp = 24.dp,
-    defaultSelectedIndex: Int = 0,
-    shape: Shape = RoundedCornerShape(8.dp),
-    navigationBarColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    itemTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    selectedItemTint: Color = MaterialTheme.colorScheme.primary,
-    itemSelected: (index: Int, reselected: Boolean) -> Unit
+private fun MinimalVariant(
+    modifier: Modifier,
+    navItems: Collection<NavigationItemData>,
+    iconSize: Dp,
+    defaultSelectedIndex: Int,
+    shape: Shape,
+    navigationBarColor: Color,
+    itemTint: Color,
+    selectedItemTint: Color,
+    onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
 
     Surface(
@@ -95,7 +203,7 @@ fun BottomNavigationBar1(
                         .clickable {
                             val reselected = selectedItemIndex == index
                             selectedItemIndex = index
-                            itemSelected(selectedItemIndex, reselected)
+                            onSelectionChanged(selectedItemIndex, reselected)
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -133,29 +241,29 @@ fun BottomNavigationBar1(
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
  * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
- * @param itemSelected A callback function that gets called when a navigation bar item is selected.
+ * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
  *                     indicating whether the same item was reselected.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.BottomNavigationBar2Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.StandardSample
  */
 @Composable
-fun BottomNavigationBar2(
-    navItems: List<NavigationItemData>,
-    modifier: Modifier = Modifier,
-    selectedItemCornerRadius: Dp = 4.dp,
-    internalPadding: Dp = 8.dp,
-    iconSize: Dp = 24.dp,
-    defaultSelectedIndex: Int = 0,
-    shape: Shape = RoundedCornerShape(8.dp),
-    navigationBarColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    itemTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    selectedItemTint: Color = MaterialTheme.colorScheme.onPrimary,
-    backgroundTint: Color = Color.Transparent,
-    selectedBackgroundTint: Color = MaterialTheme.colorScheme.primary,
-    itemSelected: (index: Int, reselected: Boolean) -> Unit
+private fun StandardVariant(
+    modifier: Modifier,
+    navItems: Collection<NavigationItemData>,
+    selectedItemCornerRadius: Dp,
+    internalPadding: Dp,
+    iconSize: Dp,
+    defaultSelectedIndex: Int,
+    shape: Shape,
+    navigationBarColor: Color,
+    itemTint: Color,
+    selectedItemTint: Color,
+    backgroundTint: Color,
+    selectedBackgroundTint: Color,
+    onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
 
     Surface(
@@ -193,7 +301,7 @@ fun BottomNavigationBar2(
                             .clickable {
                                 val reselected = selectedItemIndex == index
                                 selectedItemIndex = index
-                                itemSelected(selectedItemIndex, reselected)
+                                onSelectionChanged(selectedItemIndex, reselected)
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -231,27 +339,27 @@ fun BottomNavigationBar2(
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
  * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
- * @param itemSelected A callback function that gets called when a navigation bar item is selected.
+ * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
  *                     indicating whether the same item was reselected.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.BottomNavigationBar3Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.FilledSample
  */
 @Composable
-fun BottomNavigationBar3(
-    navItems: List<NavigationItemData>,
-    modifier: Modifier = Modifier,
-    iconSize: Dp = 24.dp,
-    defaultSelectedIndex: Int = 0,
-    shape: Shape = RoundedCornerShape(8.dp),
-    navigationBarColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    itemTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    selectedItemTint: Color = MaterialTheme.colorScheme.onPrimary,
-    backgroundTint: Color = Color.Transparent,
-    selectedBackgroundTint: Color = MaterialTheme.colorScheme.primary,
-    itemSelected: (index: Int, reselected: Boolean) -> Unit
+private fun FilledVariant(
+    modifier: Modifier,
+    navItems: Collection<NavigationItemData>,
+    iconSize: Dp,
+    defaultSelectedIndex: Int,
+    shape: Shape,
+    navigationBarColor: Color,
+    itemTint: Color,
+    selectedItemTint: Color,
+    backgroundTint: Color,
+    selectedBackgroundTint: Color,
+    onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
 
     Surface(
@@ -281,7 +389,7 @@ fun BottomNavigationBar3(
                         .clickable {
                             val reselected = selectedItemIndex == index
                             selectedItemIndex = index
-                            itemSelected(selectedItemIndex, reselected)
+                            onSelectionChanged(selectedItemIndex, reselected)
                         }
                         .background(
                             if (isSelected) selectedBackgroundTint else backgroundTint
@@ -323,30 +431,30 @@ fun BottomNavigationBar3(
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
  * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
- * @param itemSelected A callback function that gets called when a navigation bar item is selected.
+ * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
  *                     indicating whether the same item was reselected.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.BottomNavigationBar4Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.HaloSample
  */
 @Composable
-fun BottomNavigationBar4(
-    navItems: List<NavigationItemData>,
-    modifier: Modifier = Modifier,
-    selectedItemCornerRadius: Dp = 4.dp,
-    internalPadding: Dp = 8.dp,
-    iconSize: Dp = 24.dp,
-    fontSize: TextUnit = 12.sp,
-    defaultSelectedIndex: Int = 0,
-    shape: Shape = RoundedCornerShape(8.dp),
-    navigationBarColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    itemTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    selectedItemTint: Color = MaterialTheme.colorScheme.onPrimary,
-    backgroundTint: Color = Color.Transparent,
-    selectedBackgroundTint: Color = MaterialTheme.colorScheme.primary,
-    itemSelected: (index: Int, reselected: Boolean) -> Unit
+private fun HaloVariant(
+    modifier: Modifier,
+    navItems: Collection<NavigationItemData>,
+    selectedItemCornerRadius: Dp,
+    internalPadding: Dp,
+    iconSize: Dp,
+    fontSize: TextUnit,
+    defaultSelectedIndex: Int,
+    shape: Shape,
+    navigationBarColor: Color,
+    itemTint: Color,
+    selectedItemTint: Color,
+    backgroundTint: Color,
+    selectedBackgroundTint: Color,
+    onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
 
     Surface(
@@ -376,7 +484,7 @@ fun BottomNavigationBar4(
                         .clickable {
                             val reselected = selectedItemIndex == index
                             selectedItemIndex = index
-                            itemSelected(selectedItemIndex, reselected)
+                            onSelectionChanged(selectedItemIndex, reselected)
                         }
                         .clip(RoundedCornerShape(selectedItemCornerRadius))
                         .background(
@@ -437,30 +545,30 @@ fun BottomNavigationBar4(
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
  * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
- * @param itemSelected A callback function that gets called when a navigation bar item is selected.
+ * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
  *                     indicating whether the same item was reselected.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.BottomNavigationBar5Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.SwaySample
  */
 @Composable
-fun BottomNavigationBar5(
-    navItems: List<NavigationItemData>,
-    modifier: Modifier = Modifier,
-    internalPadding: Dp = 8.dp,
-    iconSize: Dp = 24.dp,
-    fontSize: TextUnit = 12.sp,
-    defaultSelectedIndex: Int = 0,
-    selectedItemOffset: Dp = 8.dp,
-    shape: Shape = RoundedCornerShape(8.dp),
-    navigationBarColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    itemTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    selectedItemTint: Color = MaterialTheme.colorScheme.onPrimary,
-    backgroundTint: Color = Color.Transparent,
-    selectedBackgroundTint: Color = MaterialTheme.colorScheme.primary,
-    itemSelected: (index: Int, reselected: Boolean) -> Unit
+private fun SwayVariant(
+    modifier: Modifier,
+    navItems: Collection<NavigationItemData>,
+    internalPadding: Dp,
+    iconSize: Dp,
+    fontSize: TextUnit,
+    defaultSelectedIndex: Int,
+    selectedItemOffset: Dp,
+    shape: Shape,
+    navigationBarColor: Color,
+    itemTint: Color,
+    selectedItemTint: Color,
+    backgroundTint: Color,
+    selectedBackgroundTint: Color,
+    onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
 
     Box(
@@ -491,7 +599,7 @@ fun BottomNavigationBar5(
                         .clickable {
                             val reselected = selectedItemIndex == index
                             selectedItemIndex = index
-                            itemSelected(selectedItemIndex, reselected)
+                            onSelectionChanged(selectedItemIndex, reselected)
                         },
                     contentAlignment = Alignment.Center
                 ) {
