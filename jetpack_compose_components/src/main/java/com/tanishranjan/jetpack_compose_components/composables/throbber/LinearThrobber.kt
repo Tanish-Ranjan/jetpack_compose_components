@@ -18,26 +18,62 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import com.tanishranjan.jetpack_compose_components.properties.throbber.LinearThrobberVariant
+import com.tanishranjan.jetpack_compose_components.utils.ComponentUtils.Companion.useIfUnspecified
+
+@Composable
+fun LinearThrobber(
+    modifier: Modifier = Modifier,
+    variant: LinearThrobberVariant = LinearThrobberVariant.BloomingDots()
+) {
+
+    when (variant) {
+
+        is LinearThrobberVariant.BloomingDots -> {
+
+            BloomingDotsVariant(
+                modifier = modifier,
+                dotRadius = variant.dotRadius,
+                spaceBetweenDots = variant.spaceBetweenDots,
+                dotColor = variant.dotColor.useIfUnspecified(MaterialTheme.colorScheme.primary)
+            )
+
+        }
+
+        is LinearThrobberVariant.BouncingDots -> {
+
+            BouncingDotsVariant(
+                modifier = modifier,
+                dotRadius = variant.dotRadius,
+                spaceBetweenDots = variant.spaceBetweenDots,
+                travelDistance = variant.travelDistance,
+                dotColor = variant.dotColor
+            )
+
+        }
+
+    }
+
+}
 
 /**
  * A composable function that creates a linear throbber with three blooming dots.
  *
  * @param modifier [Modifier] to be applied to the entire composable.
- * @param color The color of the dots.
  * @param dotRadius The radius of the dots in density pixels (dp).
  * @param spaceBetweenDots The horizontal space between the dots in density pixels (dp).
+ * @param dotColor The color of the dots.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.LinearThrobber1Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.BloomingDotsSample
  */
 @Composable
-fun LinearThrobber1(
+private fun BloomingDotsVariant(
     modifier: Modifier = Modifier,
-    dotRadius: Dp = 4.dp,
-    spaceBetweenDots: Dp = 4.dp,
-    color: Color = MaterialTheme.colorScheme.primary
+    dotRadius: Dp,
+    spaceBetweenDots: Dp,
+    dotColor: Color
 ) {
 
     val transition = rememberInfiniteTransition(label = "Infinite Transition")
@@ -102,7 +138,7 @@ fun LinearThrobber1(
         val heightCenter = size.height / 2
 
         drawCircle(
-            color = color,
+            color = dotColor,
             radius = radius * dot1,
             center = Offset(
                 widthCenter - gap,
@@ -111,7 +147,7 @@ fun LinearThrobber1(
         )
 
         drawCircle(
-            color = color,
+            color = dotColor,
             radius = radius * dot2,
             center = Offset(
                 widthCenter,
@@ -120,7 +156,7 @@ fun LinearThrobber1(
         )
 
         drawCircle(
-            color = color,
+            color = dotColor,
             radius = radius * dot3,
             center = Offset(
                 widthCenter + gap,
@@ -136,22 +172,22 @@ fun LinearThrobber1(
  * A composable function that creates a linear throbber with three bouncing dots.
  *
  * @param modifier [Modifier] to be applied to the entire composable.
- * @param color The color of the dots.
  * @param dotRadius The radius of the dots in density pixels (dp).
  * @param spaceBetweenDots The horizontal space between the dots in density pixels (dp).
  * @param travelDistance The vertical distance each dot travels up and down in density pixels (dp).
+ * @param dotColor The color of the dots.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.LinearThrobber2Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.BouncingDotsSample
  */
 @Composable
-fun LinearThrobber2(
+private fun BouncingDotsVariant(
     modifier: Modifier = Modifier,
-    dotRadius: Dp = 4.dp,
-    spaceBetweenDots: Dp = 4.dp,
-    travelDistance: Dp = 8.dp,
-    color: Color = MaterialTheme.colorScheme.primary
+    dotRadius: Dp,
+    spaceBetweenDots: Dp,
+    travelDistance: Dp,
+    dotColor: Color
 ) {
 
     val density = LocalDensity.current
@@ -224,7 +260,7 @@ fun LinearThrobber2(
         val dotOffsetY = heightCenter - travelDistancePixels / 2
 
         drawCircle(
-            color = color,
+            color = dotColor,
             radius = radius,
             center = Offset(
                 widthCenter - gap,
@@ -233,7 +269,7 @@ fun LinearThrobber2(
         )
 
         drawCircle(
-            color = color,
+            color = dotColor,
             radius = radius,
             center = Offset(
                 widthCenter,
@@ -242,7 +278,7 @@ fun LinearThrobber2(
         )
 
         drawCircle(
-            color = color,
+            color = dotColor,
             radius = radius,
             center = Offset(
                 widthCenter + gap,

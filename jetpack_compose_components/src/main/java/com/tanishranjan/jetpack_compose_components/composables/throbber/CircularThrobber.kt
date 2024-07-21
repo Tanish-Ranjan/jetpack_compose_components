@@ -27,10 +27,60 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
+import com.tanishranjan.jetpack_compose_components.properties.throbber.CircularThrobberVariants
+import com.tanishranjan.jetpack_compose_components.utils.ComponentUtils.Companion.useIfUnspecified
 import kotlin.math.cos
 import kotlin.math.sin
+
+@Composable
+fun CircularThrobber(
+    modifier: Modifier = Modifier,
+    variant: CircularThrobberVariants = CircularThrobberVariants.Web()
+) {
+
+    when (variant) {
+
+        is CircularThrobberVariants.Ripple -> {
+
+            RippleVariant(
+                modifier = modifier,
+                color = variant.color.useIfUnspecified(MaterialTheme.colorScheme.primary)
+            )
+
+        }
+
+        is CircularThrobberVariants.Windows -> {
+
+            WindowsVariant(
+                modifier = modifier,
+                strokeWidth = variant.strokeWidth,
+                color = variant.color.useIfUnspecified(MaterialTheme.colorScheme.primary),
+                trackColor = variant.trackColor.useIfUnspecified(MaterialTheme.colorScheme.primary),
+                deflectionAngle = variant.deflectionAngle
+            )
+
+        }
+
+        is CircularThrobberVariants.Web -> {
+            WebVariant(
+                modifier = modifier,
+                color = variant.color.useIfUnspecified(MaterialTheme.colorScheme.primary),
+                strokeWidth = variant.strokeWidth,
+                deflectionAngle = variant.deflectionAngle
+            )
+        }
+
+        is CircularThrobberVariants.Legacy -> {
+            LegacyVariant(
+                modifier = modifier,
+                color = variant.color.useIfUnspecified(MaterialTheme.colorScheme.primary),
+                dotRadius = variant.dotRadius
+            )
+        }
+    }
+
+}
 
 /**
  * A composable function that creates a rippling circular throbber.
@@ -40,12 +90,12 @@ import kotlin.math.sin
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.CircularThrobber1Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.RippleSample
  */
 @Composable
-fun CircularThrobber1(
+private fun RippleVariant(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary,
+    color: Color,
 ) {
 
     BoxWithConstraints(
@@ -109,15 +159,15 @@ fun CircularThrobber1(
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.CircularThrobber2Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.WindowsSample
  */
 @Composable
-fun CircularThrobber2(
+private fun WindowsVariant(
     modifier: Modifier = Modifier,
-    strokeWidth: Dp = 4.dp,
-    color: Color = MaterialTheme.colorScheme.primary,
-    trackColor: Color = Color.Transparent,
-    deflectionAngle: Float = 0f
+    strokeWidth: Dp,
+    color: Color,
+    trackColor: Color,
+    deflectionAngle: Float
 ) {
 
     val transition = rememberInfiniteTransition(label = "Infinite Transition")
@@ -186,20 +236,20 @@ fun CircularThrobber2(
  * A composable function that creates a circular throbber similar to the Web loading indicator.
  *
  * @param modifier [Modifier] to be applied to the entire composable.
- * @param strokeWidth The width of the throbber stroke in density pixels (dp).
  * @param color The color of the throbber.
+ * @param strokeWidth The width of the throbber stroke in density pixels (dp).
  * @param deflectionAngle A deflection angle in degrees applied to the starting position of the arc.
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.CircularThrobber3Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.WebSample
  */
 @Composable
-fun CircularThrobber3(
+private fun WebVariant(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary,
-    strokeWidth: Dp = 4.dp,
-    deflectionAngle: Float = 0f
+    color: Color,
+    strokeWidth: Dp,
+    deflectionAngle: Float
 ) {
 
     val transition = rememberInfiniteTransition(label = "Infinite Transition")
@@ -258,13 +308,13 @@ fun CircularThrobber3(
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.CircularThrobber4Sample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.throbber.LegacySample
  */
 @Composable
-fun CircularThrobber4(
+fun LegacyVariant(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary,
-    dotRadius: Dp = 4.dp
+    color: Color,
+    dotRadius: Dp
 ) {
 
     val transition = rememberInfiniteTransition(label = "Infinite Transition")

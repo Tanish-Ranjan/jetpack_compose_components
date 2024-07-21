@@ -7,88 +7,95 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.BottomNavigationBar1
-import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.BottomNavigationBar2
-import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.BottomNavigationBar3
-import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.BottomNavigationBar4
-import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.BottomNavigationBar5
+import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.BottomNavigationBar
 import com.tanishranjan.jetpack_compose_components.composables.bottom_navbar.data.NavigationItemData
+import com.tanishranjan.jetpack_compose_components.properties.bottom_navbar.BottomNavBarVariant
 
 @Composable
-internal fun BottomNavigationBar1Sample() {
-    BottomNavigationBar1(
+internal fun MinimalSample() {
+    BottomNavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        navItems = listOf(
-            NavigationItemData(Icons.Filled.Notifications, "Notifications"),
-            NavigationItemData(Icons.Filled.Home, "Home"),
-            NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+        variant = BottomNavBarVariant.Minimal(
+            navItems = listOf(
+                NavigationItemData(Icons.Filled.Notifications, "Notifications"),
+                NavigationItemData(Icons.Filled.Home, "Home"),
+                NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+            ),
+            defaultSelectedIndex = 1
         ),
-        defaultSelectedIndex = 1,
-        itemSelected = { index, reselected ->
+        onSelectionChanged = { index, reselected ->
             // Switch to the appropriate screen
         }
     )
 }
 
 @Composable
-internal fun BottomNavigationBar2Sample() {
-    BottomNavigationBar2(
+internal fun StandardSample() {
+    BottomNavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        navItems = listOf(
-            NavigationItemData(Icons.Filled.Notifications, "Notifications"),
-            NavigationItemData(Icons.Filled.Home, "Home"),
-            NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+        variant = BottomNavBarVariant.Standard(
+            navItems = listOf(
+                NavigationItemData(Icons.Filled.Notifications, "Notifications"),
+                NavigationItemData(Icons.Filled.Home, "Home"),
+                NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+            ),
+            defaultSelectedIndex = 1
         ),
-        defaultSelectedIndex = 1,
-        itemSelected = { index, reselected ->
+        onSelectionChanged = { index, reselected ->
             // Switch to the appropriate screen
         }
     )
 }
 
 @Composable
-internal fun BottomNavigationBar3Sample() {
-    BottomNavigationBar3(
+internal fun FilledSample() {
+    BottomNavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        navItems = listOf(
-            NavigationItemData(Icons.Filled.Notifications, "Notifications"),
-            NavigationItemData(Icons.Filled.Home, "Home"),
-            NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+        variant = BottomNavBarVariant.Filled(
+            navItems = listOf(
+                NavigationItemData(Icons.Filled.Notifications, "Notifications"),
+                NavigationItemData(Icons.Filled.Home, "Home"),
+                NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+            ),
+            defaultSelectedIndex = 1
         ),
-        defaultSelectedIndex = 1,
-        itemSelected = { index, reselected ->
+        onSelectionChanged = { index, reselected ->
             // Switch to the appropriate screen
         }
     )
 }
 
 @Composable
-internal fun BottomNavigationBar4Sample() {
-    BottomNavigationBar4(
+internal fun HaloSample() {
+    BottomNavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        navItems = listOf(
-            NavigationItemData(Icons.Filled.Notifications, "Notifications"),
-            NavigationItemData(Icons.Filled.Home, "Home"),
-            NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+        variant = BottomNavBarVariant.Halo(
+            navItems = listOf(
+                NavigationItemData(Icons.Filled.Notifications, "Notifications"),
+                NavigationItemData(Icons.Filled.Home, "Home"),
+                NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+            ),
+            defaultSelectedIndex = 1
         ),
-        defaultSelectedIndex = 1,
-        itemSelected = { index, reselected ->
+        onSelectionChanged = { index, reselected ->
             // Switch to the appropriate screen
         }
     )
 }
 
 @Composable
-internal fun BottomNavigationBar5Sample() {
-    BottomNavigationBar5(
+internal fun SwaySample() {
+    BottomNavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        navItems = listOf(
-            NavigationItemData(Icons.Filled.Notifications, "Notifications"),
-            NavigationItemData(Icons.Filled.Home, "Home"),
-            NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+        variant = BottomNavBarVariant.Sway(
+            navItems = listOf(
+                NavigationItemData(Icons.Filled.Notifications, "Notifications"),
+                NavigationItemData(Icons.Filled.Home, "Home"),
+                NavigationItemData(Icons.Filled.AccountCircle, "Profile")
+            ),
+            defaultSelectedIndex = 1
         ),
-        defaultSelectedIndex = 1,
-        itemSelected = { index, reselected ->
+        onSelectionChanged = { index, reselected ->
             // Switch to the appropriate screen
         }
     )
