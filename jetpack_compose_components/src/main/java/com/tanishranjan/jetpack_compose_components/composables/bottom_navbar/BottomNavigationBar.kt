@@ -88,7 +88,7 @@ fun BottomNavigationBar(
                 shape = variant.shape,
                 navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
                 itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
-                selectedItemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
+                selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
                 backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
                 selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
                     MaterialTheme.colorScheme.primary
