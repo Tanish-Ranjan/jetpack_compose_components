@@ -66,10 +66,10 @@ internal fun FilledSample() {
 }
 
 @Composable
-internal fun HaloSample() {
+internal fun StandardTextSample() {
     BottomNavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        variant = BottomNavBarVariant.Halo(
+        variant = BottomNavBarVariant.StandardText(
             navItems = listOf(
                 NavigationItemData(Icons.Filled.Notifications, "Notifications"),
                 NavigationItemData(Icons.Filled.Home, "Home"),

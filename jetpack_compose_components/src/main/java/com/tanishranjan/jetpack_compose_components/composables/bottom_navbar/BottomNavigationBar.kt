@@ -1,10 +1,14 @@
 package com.tanishranjan.jetpack_compose_components.composables.bottom_navbar
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -22,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -29,6 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -50,6 +58,7 @@ fun BottomNavigationBar(
                 modifier = modifier,
                 navItems = variant.navItems,
                 iconSize = variant.iconSize,
+                shrinkSize = variant.shrinkSize,
                 defaultSelectedIndex = variant.defaultSelectedIndex,
                 shape = variant.shape,
                 navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
@@ -71,7 +80,6 @@ fun BottomNavigationBar(
                 navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
                 itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
                 selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
-                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
                 selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
                     MaterialTheme.colorScheme.primary
                 ),
@@ -89,7 +97,6 @@ fun BottomNavigationBar(
                 navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
                 itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
                 selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
-                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
                 selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
                     MaterialTheme.colorScheme.primary
                 ),
@@ -97,8 +104,8 @@ fun BottomNavigationBar(
             )
         }
 
-        is BottomNavBarVariant.Halo -> {
-            HaloVariant(
+        is BottomNavBarVariant.StandardText -> {
+            StandardTextVariant(
                 modifier = modifier,
                 navItems = variant.navItems,
                 selectedItemCornerRadius = variant.selectedItemCornerRadius,
@@ -150,6 +157,7 @@ fun BottomNavigationBar(
  *                 to be displayed in the bar. Each item should have an image vector and a title.
  * @param modifier [Modifier] to be applied to the entire bottom navigation bar.
  * @param iconSize The size of the icons in the navigation bar items.
+ * @param shrinkSize The size of the icon while pressed down.
  * @param defaultSelectedIndex The default selected index of the navigation bar.
  * @param shape The shape of the bottom navigation bar.
  * @param navigationBarColor The color of the bottom navigation bar background.
@@ -168,6 +176,7 @@ private fun MinimalVariant(
     modifier: Modifier,
     navItems: Collection<NavigationItemData>,
     iconSize: Dp,
+    shrinkSize: Dp,
     defaultSelectedIndex: Int,
     shape: Shape,
     navigationBarColor: Color,
@@ -196,14 +205,32 @@ private fun MinimalVariant(
 
                 val isSelected = selectedItemIndex == index
 
+                var targetAnimSize by remember {
+                    mutableStateOf(iconSize)
+                }
+
+                val animatedSize = animateDpAsState(
+                    targetValue = targetAnimSize,
+                    label = "Icon Size"
+                )
+
                 Box(
                     Modifier
                         .fillMaxHeight()
                         .weight(1f)
-                        .clickable {
-                            val reselected = selectedItemIndex == index
-                            selectedItemIndex = index
-                            onSelectionChanged(selectedItemIndex, reselected)
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = {
+                                    targetAnimSize = iconSize - shrinkSize
+                                    val isNotCancelled = tryAwaitRelease()
+                                    targetAnimSize = iconSize
+                                    if (isNotCancelled) {
+                                        val reselected = selectedItemIndex == index
+                                        selectedItemIndex = index
+                                        onSelectionChanged(selectedItemIndex, reselected)
+                                    }
+                                }
+                            )
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -211,7 +238,7 @@ private fun MinimalVariant(
                     Icon(
                         imageVector = item.icon,
                         contentDescription = item.title,
-                        modifier = Modifier.size(iconSize),
+                        modifier = Modifier.size(animatedSize.value),
                         tint = if (isSelected) selectedItemTint else itemTint
                     )
 
@@ -239,7 +266,6 @@ private fun MinimalVariant(
  * @param navigationBarColor The color of the bottom navigation bar background.
  * @param itemTint The tint color for the non-selected navigation bar item icons.
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
- * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
  * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
@@ -261,7 +287,6 @@ private fun StandardVariant(
     navigationBarColor: Color,
     itemTint: Color,
     selectedItemTint: Color,
-    backgroundTint: Color,
     selectedBackgroundTint: Color,
     onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
@@ -274,35 +299,52 @@ private fun StandardVariant(
         color = navigationBarColor,
     ) {
 
-        var selectedItemIndex by remember {
-            mutableIntStateOf(defaultSelectedIndex)
-        }
+        BoxWithConstraints(Modifier.fillMaxSize()) {
 
-        Row(
-            Modifier.fillMaxSize()
-        ) {
+            var selectedItemIndex by remember {
+                mutableIntStateOf(defaultSelectedIndex)
+            }
 
-            navItems.forEachIndexed { index, item ->
+            val tabWidth = maxWidth / navItems.size
+            val offset = (tabWidth - iconSize - internalPadding * 2) / 2
 
-                val isSelected = selectedItemIndex == index
+            val indicatorPosition by animateDpAsState(
+                targetValue = with(LocalDensity.current) { offset + (selectedItemIndex * tabWidth.toPx()).toDp() },
+                label = "Indicator Position"
+            )
 
-                Box(
-                    Modifier
-                        .fillMaxHeight()
-                        .weight(1f),
-                    contentAlignment = Alignment.Center
-                ) {
+            Box(
+                Modifier
+                    .offset(x = indicatorPosition)
+                    .size(iconSize + internalPadding * 2)
+                    .clip(RoundedCornerShape(selectedItemCornerRadius))
+                    .background(selectedBackgroundTint)
+                    .align(Alignment.CenterStart)
+            )
+
+            Row(
+                Modifier.fillMaxSize()
+            ) {
+
+                navItems.forEachIndexed { index, item ->
+
+                    val isSelected = selectedItemIndex == index
 
                     Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(selectedItemCornerRadius))
-                            .background(if (isSelected) selectedBackgroundTint else backgroundTint)
-                            .padding(internalPadding)
-                            .clickable {
-                                val reselected = selectedItemIndex == index
-                                selectedItemIndex = index
-                                onSelectionChanged(selectedItemIndex, reselected)
-                            },
+                        Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable(
+                                interactionSource = remember {
+                                    MutableInteractionSource()
+                                },
+                                indication = null,
+                                onClick = {
+                                    val reselected = selectedItemIndex == index
+                                    selectedItemIndex = index
+                                    onSelectionChanged(selectedItemIndex, reselected)
+                                }
+                            ),
                         contentAlignment = Alignment.Center
                     ) {
 
@@ -337,7 +379,6 @@ private fun StandardVariant(
  * @param navigationBarColor The color of the bottom navigation bar background.
  * @param itemTint The tint color for the non-selected navigation bar item icons.
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
- * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
  * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
@@ -357,7 +398,6 @@ private fun FilledVariant(
     navigationBarColor: Color,
     itemTint: Color,
     selectedItemTint: Color,
-    backgroundTint: Color,
     selectedBackgroundTint: Color,
     onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
@@ -370,39 +410,62 @@ private fun FilledVariant(
         color = navigationBarColor,
     ) {
 
-        var selectedItemIndex by remember {
-            mutableIntStateOf(defaultSelectedIndex)
-        }
+        BoxWithConstraints(Modifier.fillMaxSize()) {
 
-        Row(
-            Modifier.fillMaxSize()
-        ) {
+            var selectedItemIndex by remember {
+                mutableIntStateOf(defaultSelectedIndex)
+            }
 
-            navItems.forEachIndexed { index, item ->
+            val tabWidth = maxWidth / navItems.size
 
-                val isSelected = selectedItemIndex == index
+            val indicatorPosition by animateDpAsState(
+                targetValue = with(LocalDensity.current) { (selectedItemIndex * tabWidth.toPx()).toDp() },
+                label = "Indicator Position"
+            )
 
-                Box(
-                    Modifier
-                        .fillMaxHeight()
-                        .weight(1f)
-                        .clickable {
-                            val reselected = selectedItemIndex == index
-                            selectedItemIndex = index
-                            onSelectionChanged(selectedItemIndex, reselected)
-                        }
-                        .background(
-                            if (isSelected) selectedBackgroundTint else backgroundTint
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
+            Box(
+                Modifier
+                    .offset(x = indicatorPosition)
+                    .fillMaxHeight()
+                    .width(tabWidth)
+                    .background(selectedBackgroundTint)
+                    .align(Alignment.CenterStart)
+            )
 
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.title,
-                        modifier = Modifier.size(iconSize),
-                        tint = if (isSelected) selectedItemTint else itemTint
-                    )
+            Row(
+                Modifier.fillMaxSize()
+            ) {
+
+                navItems.forEachIndexed { index, item ->
+
+                    val isSelected = selectedItemIndex == index
+
+                    Box(
+                        Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .clickable(
+                                interactionSource = remember {
+                                    MutableInteractionSource()
+                                },
+                                indication = null,
+                                onClick = {
+                                    val reselected = selectedItemIndex == index
+                                    selectedItemIndex = index
+                                    onSelectionChanged(selectedItemIndex, reselected)
+                                }
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = item.title,
+                            modifier = Modifier.size(iconSize),
+                            tint = if (isSelected) selectedItemTint else itemTint
+                        )
+
+                    }
 
                 }
 
@@ -437,10 +500,10 @@ private fun FilledVariant(
  *
  * @since 1.0.0
  * @author Tanish Ranjan
- * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.HaloSample
+ * @sample com.tanishranjan.jetpack_compose_components.samples.bottom_navbar.StandardTextSample
  */
 @Composable
-private fun HaloVariant(
+private fun StandardTextVariant(
     modifier: Modifier,
     navItems: Collection<NavigationItemData>,
     selectedItemCornerRadius: Dp,
@@ -481,11 +544,17 @@ private fun HaloVariant(
 
                 Box(
                     Modifier
-                        .clickable {
-                            val reselected = selectedItemIndex == index
-                            selectedItemIndex = index
-                            onSelectionChanged(selectedItemIndex, reselected)
-                        }
+                        .clickable(
+                            interactionSource = remember {
+                                MutableInteractionSource()
+                            },
+                            indication = null,
+                            onClick = {
+                                val reselected = selectedItemIndex == index
+                                selectedItemIndex = index
+                                onSelectionChanged(selectedItemIndex, reselected)
+                            }
+                        )
                         .clip(RoundedCornerShape(selectedItemCornerRadius))
                         .background(
                             if (isSelected) selectedBackgroundTint else backgroundTint
@@ -495,7 +564,6 @@ private fun HaloVariant(
                 ) {
 
                     Row(
-                        modifier = Modifier.padding(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
@@ -596,11 +664,17 @@ private fun SwayVariant(
                     Modifier
                         .fillMaxSize()
                         .weight(1f)
-                        .clickable {
-                            val reselected = selectedItemIndex == index
-                            selectedItemIndex = index
-                            onSelectionChanged(selectedItemIndex, reselected)
-                        },
+                        .clickable (
+                            interactionSource = remember {
+                                MutableInteractionSource()
+                            },
+                            indication = null,
+                            onClick = {
+                                val reselected = selectedItemIndex == index
+                                selectedItemIndex = index
+                                onSelectionChanged(selectedItemIndex, reselected)
+                            }
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
 

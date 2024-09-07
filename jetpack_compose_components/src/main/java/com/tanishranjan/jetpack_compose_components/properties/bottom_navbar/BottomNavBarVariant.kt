@@ -14,6 +14,7 @@ sealed class BottomNavBarVariant {
     data class Minimal(
         val navItems: Collection<NavigationItemData>,
         val iconSize: Dp = 24.dp,
+        val shrinkSize: Dp = 4.dp,
         val defaultSelectedIndex: Int = 0,
         val shape: Shape = RoundedCornerShape(8.dp),
         val navigationBarColor: Color = Color.Unspecified,
@@ -31,7 +32,6 @@ sealed class BottomNavBarVariant {
         val navigationBarColor: Color = Color.Unspecified,
         val itemTint: Color = Color.Unspecified,
         val selectedItemTint: Color = Color.Unspecified,
-        val backgroundTint: Color = Color.Unspecified,
         val selectedBackgroundTint: Color = Color.Unspecified,
     ) : BottomNavBarVariant()
 
@@ -43,11 +43,10 @@ sealed class BottomNavBarVariant {
         val navigationBarColor: Color = Color.Unspecified,
         val itemTint: Color = Color.Unspecified,
         val selectedItemTint: Color = Color.Unspecified,
-        val backgroundTint: Color = Color.Unspecified,
         val selectedBackgroundTint: Color = Color.Unspecified,
     ) : BottomNavBarVariant()
 
-    data class Halo(
+    data class StandardText(
         val navItems: Collection<NavigationItemData>,
         val selectedItemCornerRadius: Dp = 4.dp,
         val internalPadding: Dp = 8.dp,
