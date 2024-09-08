@@ -12,18 +12,10 @@ A curated collection of reusable and customizable Jetpack Compose components to 
 ## 🚀 Getting Started
 
 1. **Add the JitPack repository to your root build.gradle file:**
+    <details open>
+    <summary>Kotlin DSL</summary>
+   
     ```gradle
-    // Groovy DSL
-    dependencyResolutionManagement {
-        ...
-        repositories {
-            ...
-            maven { url 'https://jitpack.io' }
-        }
-    }
-    ```
-    ```gradle
-    // Kotlin DSL
     dependencyResolutionManagement {
         ...
         repositories {
@@ -33,19 +25,45 @@ A curated collection of reusable and customizable Jetpack Compose components to 
     }
     ```
    
+    </details>
+   
+    <details>
+    <summary>Groovy DSL</summary>
+   
+    ```gradle
+    dependencyResolutionManagement {
+        ...
+        repositories {
+            ...
+            maven { url 'https://jitpack.io' }
+        }
+    }
+    ```
+   
+    </details>
+   
 2. **Add the dependency:**
+    <details open>
+    <summary>Kotlin DSL</summary>
+   
     ```gradle
-    // Groovy DSL
     dependencies {
-        implementation 'com.github.Tanish-Ranjan:jetpack_compose_components:<version>'
+        implementation("com.github.Tanish-Ranjan:jetpack_compose_components:version")
     }
     ```
+   
+    </details>
+   
+    <details>
+    <summary>Groovy DSL</summary>
+   
     ```gradle
-    // Kotlin DSL
     dependencies {
-        implementation("com.github.Tanish-Ranjan:jetpack_compose_components:<version>")
+        implementation 'com.github.Tanish-Ranjan:jetpack_compose_components:version'
     }
     ```
+   
+    </details>
 
 3. **Use the Composable:**
     ```kotlin
@@ -62,37 +80,7 @@ A curated collection of reusable and customizable Jetpack Compose components to 
 
 ## 📚 Components
 
-### 1. Linear Throbbers
-
-Simple and smooth progress indicators for linear actions.
-
-| Preview | Component |
-|---|---|
-| <img src="images/img1.png" alt="Variant 1" height="100"/> | LinearThrobber1 |
-| <img src="images/img2.png" alt="Variant 2" height="100"/> | LinearThrobber2 |
-
-### 2. Circular Throbbers
-
-Circular progress indicators for various use cases.
-
-| Preview | Component |
-|---|---|
-| <img src="images/img3.png" alt="Variant 1" height="100"/> | CircularThrobber1 |
-| <img src="images/img4.png" alt="Variant 2" height="100"/> | CircularThrobber2 |
-| <img src="images/img5.png" alt="Variant 3" height="100"/> | CircularThrobber3 |
-| <img src="images/img6.png" alt="Variant 4" height="100"/> | CircularThrobber4 |
-
-### 3. Bottom Navigation Bars
-
-Easy-to-use navigation bars for the bottom of your screen.
-
-| Preview | Component |
-|---|---|
-| <img src="images/img7.jpg" alt="Variant 1" width="400"/> | BottomNavigationBar1 |
-| <img src="images/img8.jpg" alt="Variant 2" width="400"/> | BottomNavigationBar2 |
-| <img src="images/img9.jpg" alt="Variant 3" width="400"/> | BottomNavigationBar3 |
-| <img src="images/img10.jpg" alt="Variant 4" width="400"/> | BottomNavigationBar4 |
-| <img src="images/img11.jpg" alt="Variant 5" width="400"/> | BottomNavigationBar5 |
+Browse through a huge collection of all the components this library provides in [components page](./docs/README.md).
 
 ## 🤝 Contributing
 
