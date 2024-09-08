@@ -14,6 +14,7 @@ A curated collection of reusable and customizable Jetpack Compose components to 
 1. **Add the JitPack repository to your root build.gradle file:**
     <details open>
     <summary>Kotlin DSL</summary>
+   
     ```gradle
     dependencyResolutionManagement {
         ...
@@ -23,9 +24,12 @@ A curated collection of reusable and customizable Jetpack Compose components to 
         }
     }
     ```
+   
     </details>
+   
     <details>
     <summary>Groovy DSL</summary>
+   
     ```gradle
     dependencyResolutionManagement {
         ...
@@ -35,24 +39,30 @@ A curated collection of reusable and customizable Jetpack Compose components to 
         }
     }
     ```
+   
     </details>
    
 2. **Add the dependency:**
     <details open>
     <summary>Kotlin DSL</summary>
+   
     ```gradle
     dependencies {
         implementation("com.github.Tanish-Ranjan:jetpack_compose_components:version")
     }
     ```
+   
     </details>
+   
     <details>
     <summary>Groovy DSL</summary>
+   
     ```gradle
     dependencies {
         implementation 'com.github.Tanish-Ranjan:jetpack_compose_components:version'
     }
     ```
+   
     </details>
 
 3. **Use the Composable:**
