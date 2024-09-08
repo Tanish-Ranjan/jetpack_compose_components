@@ -117,7 +117,6 @@ fun BottomNavigationBar(
                 navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
                 itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
                 selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
-                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
                 selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
                     MaterialTheme.colorScheme.primary
                 ),
@@ -138,7 +137,6 @@ fun BottomNavigationBar(
                 navigationBarColor = variant.navigationBarColor.useIfUnspecified(MaterialTheme.colorScheme.surfaceVariant),
                 itemTint = variant.itemTint.useIfUnspecified(MaterialTheme.colorScheme.onSurfaceVariant),
                 selectedItemTint = variant.selectedItemTint.useIfUnspecified(MaterialTheme.colorScheme.onPrimary),
-                backgroundTint = variant.backgroundTint.useIfUnspecified(Color.Transparent),
                 selectedBackgroundTint = variant.selectedBackgroundTint.useIfUnspecified(
                     MaterialTheme.colorScheme.primary
                 ),
@@ -492,7 +490,6 @@ private fun FilledVariant(
  * @param navigationBarColor The color of the bottom navigation bar background.
  * @param itemTint The tint color for the non-selected navigation bar item icons.
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
- * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
  * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
@@ -515,7 +512,6 @@ private fun StandardTextVariant(
     navigationBarColor: Color,
     itemTint: Color,
     selectedItemTint: Color,
-    backgroundTint: Color,
     selectedBackgroundTint: Color,
     onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
@@ -557,7 +553,7 @@ private fun StandardTextVariant(
                         )
                         .clip(RoundedCornerShape(selectedItemCornerRadius))
                         .background(
-                            if (isSelected) selectedBackgroundTint else backgroundTint
+                            if (isSelected) selectedBackgroundTint else Color.Transparent
                         )
                         .padding(internalPadding),
                     contentAlignment = Alignment.Center
@@ -611,7 +607,6 @@ private fun StandardTextVariant(
  * @param navigationBarColor The color of the bottom navigation bar background.
  * @param itemTint The tint color for the non-selected navigation bar item icons.
  * @param selectedItemTint The tint color for the selected navigation bar item icon.
- * @param backgroundTint The background tint color for the unselected navigation bar items.
  * @param selectedBackgroundTint The background tint color for the selected navigation bar item.
  * @param onSelectionChanged A callback function that gets called when a navigation bar item is selected.
  *                     The function receives two arguments: the selected item index and a boolean
@@ -634,7 +629,6 @@ private fun SwayVariant(
     navigationBarColor: Color,
     itemTint: Color,
     selectedItemTint: Color,
-    backgroundTint: Color,
     selectedBackgroundTint: Color,
     onSelectionChanged: (newIndex: Int, isReselected: Boolean) -> Unit
 ) {
@@ -696,7 +690,7 @@ private fun SwayVariant(
                             Modifier
                                 .clip(CircleShape)
                                 .background(
-                                    if (isSelected) selectedBackgroundTint else backgroundTint
+                                    if (isSelected) selectedBackgroundTint else Color.Transparent
                                 )
                                 .padding(internalPadding)
                         ) {

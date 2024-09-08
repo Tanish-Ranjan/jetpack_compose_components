@@ -47,7 +47,7 @@ fun LinearThrobber(
                 dotRadius = variant.dotRadius,
                 spaceBetweenDots = variant.spaceBetweenDots,
                 travelDistance = variant.travelDistance,
-                dotColor = variant.dotColor
+                dotColor = variant.dotColor.useIfUnspecified(MaterialTheme.colorScheme.primary)
             )
 
         }

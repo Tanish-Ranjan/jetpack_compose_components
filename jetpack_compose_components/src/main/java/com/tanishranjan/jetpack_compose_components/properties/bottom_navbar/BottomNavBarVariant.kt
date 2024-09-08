@@ -57,7 +57,6 @@ sealed class BottomNavBarVariant {
         val navigationBarColor: Color = Color.Unspecified,
         val itemTint: Color = Color.Unspecified,
         val selectedItemTint: Color = Color.Unspecified,
-        val backgroundTint: Color = Color.Unspecified,
         val selectedBackgroundTint: Color = Color.Unspecified,
     ) : BottomNavBarVariant()
 
@@ -72,7 +71,6 @@ sealed class BottomNavBarVariant {
         val navigationBarColor: Color = Color.Unspecified,
         val itemTint: Color = Color.Unspecified,
         val selectedItemTint: Color = Color.Unspecified,
-        val backgroundTint: Color = Color.Unspecified,
         val selectedBackgroundTint: Color = Color.Unspecified,
     ) : BottomNavBarVariant()
 
